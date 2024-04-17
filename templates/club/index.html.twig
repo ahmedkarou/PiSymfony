@@ -3,12 +3,21 @@
 {% block title %}Club index{% endblock %}
 
 {% block body %}
+<style>
+        /* Style for the image */
+        .club-image {
+            max-width: 100px; /* Adjust the maximum width as needed */
+            height: auto;
+            margin-right: 10px; /* Add some spacing between the image and the text */
+            border-radius: 5px; /* Add a border radius for rounded corners */
+        }
+    </style>
     <h1>Club index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Image</th>
                 <th>Name</th>
                 <th>Organizer</th>
                 <th>Location</th>
@@ -21,7 +30,10 @@
         <tbody>
         {% for club in clubs %}
             <tr>
-                <td>{{ club.id }}</td>
+                 
+                <td>
+                <img class="club-image" src="{{ asset('uploads/image/' ~ club.image) }}" alt="Livreur Image">
+                </td>
                 <td>{{ club.Name }}</td>
                 <td>{{ club.organizer }}</td>
                 <td>{{ club.location }}</td>

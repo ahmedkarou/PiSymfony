@@ -35,6 +35,8 @@ class Club
 
     #[ORM\Column(length: 255)]
     private ?string $descripton = null;
+    #[ORM\Column(type: 'string')]
+    private string $image;
 
     #[ORM\OneToMany(targetEntity: Offre::class, mappedBy: 'club')]
     private Collection $offer;
@@ -156,4 +158,15 @@ class Club
 {
     return $this->Name ?? ''; // Assuming 'Name' is the property representing the club's name
 }
+public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
 }
