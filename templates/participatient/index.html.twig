@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Participatient index{% endblock %}
+
+{% block body %}
+    <h1>Participatient index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_par</th>
+                <th>Prenom_par</th>
+                <th>Age_par</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for participatient in participatients %}
+            <tr>
+                <td>{{ participatient.id }}</td>
+                <td>{{ participatient.nomPar }}</td>
+                <td>{{ participatient.prenomPar }}</td>
+                <td>{{ participatient.agePar }}</td>
+                <td>
+                    <a href="{{ path('app_participatient_show', {'id': participatient.id}) }}">show</a>
+                    <a href="{{ path('app_participatient_edit', {'id': participatient.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_participatient_new') }}">Create new</a>
+{% endblock %}
