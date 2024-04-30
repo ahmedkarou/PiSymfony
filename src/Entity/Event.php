@@ -42,7 +42,7 @@ class Event
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    private ?string $type= null;
 
     #[ORM\Column(length: 255)]
     private ?string $image = null;
@@ -111,7 +111,7 @@ class Event
         return $this;
     }
 
-    public function getType(): ?string
+    public function gettype(): ?string
     {
         return $this->type;
     }

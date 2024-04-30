@@ -1,0 +1,77 @@
+{% extends 'test/index.html.twig' %}
+
+{% block addparticipant %}
+    <section class="newslatter-section" id="subscribe-section">
+    <div class="container">
+        <div class="newslatter-inner set-bg" data-setbg="img/newslatter-bg.jpg">
+            <div class="ni-text">
+                <h3>Subscribe To Event</h3>
+                <p>Subscribe to our newsletter and don’t miss anything</p>
+            </div>
+            <form id="subscribe-form" method="post" class="ni-form" action="{{ path('app_crete', {'id': event.id}) }}">
+                
+                {{ form_start(form) }}
+                
+                <div class="form-group">
+                    {{ form_label(form.nom_par) }}
+                    {{ form_widget(form.nom_par, {'attr': {'class': 'form-control', 'placeholder': 'Your last name'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.prenom_par) }}
+                    {{ form_widget(form.prenom_par, {'attr': {'class': 'form-control', 'placeholder': 'Your first name'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.age_par) }}
+                    {{ form_widget(form.age_par, {'attr': {'class': 'form-control', 'placeholder': 'Your age'}}) }}
+                </div>
+                
+                {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary'}}) }}
+
+                {{ form_end(form) }}
+                
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const subscribeForm = document.getElementById('subscribe-form');
+
+    subscribeForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch("{{ path('app_crete', {'id': event.id}) }}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                // You can redirect to another page or reload the current page
+                window.location.href = "{{ path('app_event_front') }}";
+            } else {
+                // Handle form errors
+                alert(data.message + '\n' + data.errors.join('\n'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while submitting the form');
+        });
+    });
+});
+
+</script>
+{% endblock %}

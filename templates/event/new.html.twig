@@ -3,9 +3,77 @@
 {% block title %}New Event{% endblock %}
 
 {% block body %}
+  <div class="container mt-5">
     <h1>Create new Event</h1>
 
-    {{ include('event/_form.html.twig') }}
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novàalidate'}}) }}
 
-    <a href="{{ path('app_event_index') }}">back to list</a>
+        <div class="mb-3">
+          {{ form_label(form.name, 'Name', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Enter event name'}}) }}
+          {{ form_errors(form.name) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.capacite, 'Capacity', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.capacite, {'attr': {'class': 'form-control', 'placeholder': 'Enter capacity'}}) }}
+          {{ form_errors(form.capacite) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.localization, 'Localization', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.localization, {'attr': {'class': 'form-control', 'placeholder': 'Enter localization'}}) }}
+          {{ form_errors(form.localization) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': 'Enter description'}}) }}
+          {{ form_errors(form.description) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.type, 'Event Type', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
+          {{ form_errors(form.type) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.image, 'Your Image (Images only)', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(  form.image, {'attr': {'class': 'form-control'}}) }}
+          {{ form_errors(form.image) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_label(form.date, 'Date', {'label_attr': {'class': 'form-label'}}) }}
+          {{ form_widget(form.date, {'attr': {'class': 'form-control js-datepicker', 'type': 'date', 'id': 'datepicker'}}) }}
+          {{ form_errors(form.date) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+
+        {{ form_end(form) }}
+
+      </div>
+    </div>
+
+    <a href="{{ path('app_event_index') }}" class="btn btn-secondary mt-3">Back to list</a>
+  </div>
+{% endblock %}
+
+{% block javascripts %}
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+  <script>
+    $(document).ready(function() {
+      $('.js-datepicker').datepicker({
+        format: 'yy-mm-dd',
+        // Other options as desired (e.g., autoclose: true)
+      });
+    });
+  </script>
 {% endblock %}
