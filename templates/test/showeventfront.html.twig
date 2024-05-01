@@ -2,6 +2,11 @@
 {% extends 'test/index.html.twig' %}
 
 {% block eventbody %}
+<style>
+.fa-star.checked:before {
+    color: gold; /* Adjust color as needed */
+}
+</style>
 
     <!-- latest BLog Section Begin -->
     <section class="latest-blog spad">
@@ -24,10 +29,21 @@
                 
                 <a href="{{ path('app_crete', {'id': event.id}) }}" data-event-id="{{ event.id }}" class="event-link">{{ event.name }}</a>
                 </h4>
+                  {% if averageRatings[event.id] is not null %}
+            <p class="li-tag">Average Rating: {{ averageRatings[event.id] }}</p>
+        {% else %}
+            <p class="li-tag">No ratings yet</p>
+        {% endif %}
                 <p>{{ event.description }}</p>
                 <span><i class="fa fa-calendar"></i> {{ event.date ? event.date|date('d M, Y') : 'Date not set' }}</span>
                 <span><i class="fa fa-users"></i> Capacity: {{ event.capacite }}</span>
                 <span><i class="fa fa-map-marker"></i> {{ event.localization }}</span>
+                  <div class="rating" data-event-id="{{ event.id }}">
+                                    {% for i in 1..5 %}
+                                        
+                                        <span class="fa fa-star" data-rating="{{ i }}" title="{{ i }}"></span>
+                                    {% endfor %}
+                                </div>
             </div>
         </div>
     </div>
@@ -35,10 +51,51 @@
             </div>
         </div>
     </section>
-    <script>
+ <script>
+document.addEventListener("DOMContentLoaded", function() {
+    const stars = document.querySelectorAll('.rating .fa-star');
 
-    
- 
-    </script>
+    stars.forEach(function(star) {
+        star.addEventListener('click', function() {
+            const ratingValue = parseInt(this.dataset.rating);
+            const eventId = parseInt(this.closest('.rating').dataset.eventId);
+
+            // Toggle filled/empty star within the clicked event's rating section
+            const eventStars = this.parentElement.querySelectorAll('.fa-star');
+            eventStars.forEach(function(s) {
+                const sRating = parseInt(s.dataset.rating);
+                if (sRating <= ratingValue) {
+                    s.classList.add('checked');
+                } else {
+                    s.classList.remove('checked');
+                }
+            });
+
+            // Log the selected rating and event ID
+            console.log("Event ID:", eventId);
+            console.log("Selected Rating:", ratingValue);
+
+            // Send AJAX request to add the rating
+            fetch('{{ path('add_rating') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({
+                    eventId: eventId,
+                    ratingValue: ratingValue
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                window.location.reload();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+});
+</script>
 {% endblock %}
 

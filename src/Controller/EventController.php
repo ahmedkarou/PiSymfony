@@ -11,6 +11,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 #[Route('/event')]
 class EventController extends AbstractController
@@ -104,5 +110,45 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
     }
+ 
+#[Route('/search', name: 'search_event', methods: ['POST'])]
+public function search(Request $request,  EntityManagerInterface $entityManager,NormalizerInterface $Normalizer)
+
+{
    
+    $searchTerm = $request->query->get('searchTerm');
+    
+    
+   
+    
+    
+    $events = $entityManager->getRepository(Event::class)->search($searchTerm);
+    $jsonContent = $Normalizer->normalize($events, 'json', ['groups' => 'search']);
+ 
+    
+    return new Response(json_encode($jsonContent));
 }
+#[Route('/', name: 'send_email', methods: ['POST'])]
+public function sendEmail(Request $request, MailerInterface $mailer): Response
+{
+    // Récupérer l'adresse email saisie par l'utilisateur depuis la requête
+    $userEmail = json_decode($request->getContent(), true)['userEmail'];
+
+    // Construire et envoyer l'email
+    $email = (new Email())
+        ->from('motezhadjsalem4@gmail.com') // Remplacez avec votre adresse email
+        ->to($userEmail)
+        ->subject('Welcome to our newsletter!')
+        ->text('Thank you for subscribing to our newsletter.');
+
+    $mailer->send($email);
+
+    // Répondre avec un message JSON pour confirmer que l'email a été envoyé avec succès
+    $successMessage = 'Email sent successfully!';
+    return new JsonResponse(['message' => $successMessage]);
+}
+}
+
+
+   
+

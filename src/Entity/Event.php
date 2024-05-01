@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
+
 class Event
 {
     #[ORM\Id]
@@ -24,44 +26,52 @@ class Event
         pattern: '/\d/',
         match: false,
         message: 'Your name cannot contain a number',)]
+        #[Groups(['search'])]
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Groups(['search'])]
     private ?int $capacite = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     #[Assert\Length(min: 4,minMessage: "veuillez avoir au minimum 4 caractere" )]
-    #[Assert\Regex(
-        pattern: '/\d/',
-        match: false,
-        message: 'Your name cannot contain a number',)]
+    #[Groups(['search'])]
+   
     private ?string $localization = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['search'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['search'])]
     private ?string $type= null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['search'])]
     private ?string $image = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['search'])]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\OneToMany(targetEntity: Participatient::class, mappedBy: 'event')]
     private Collection $Participatient;
 
+   
+
     public function __construct()
     {
         $this->Participatient = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
+    
 
     public function getName(): ?string
     {
@@ -180,6 +190,7 @@ class Event
 {
 return $this->name ?? ''; // Assuming 'Name' is the property representing the club's name
 }
+
 }
 
 

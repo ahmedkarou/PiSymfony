@@ -16,6 +16,7 @@ class ParticipatientType extends AbstractType
             ->add('prenom_par')
             ->add('age_par')
             ->add('event')
+            ->add('email')
         ;
     }
 

@@ -2,5 +2,18 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 # config/routes.yaml
+add_rating:
+    path: /addRating
+    controller: App\Controller\TestController::addRating
+    methods: [POST]
+search_event:
+    path: /search
+    controller: App\Controller\EventController::search
+    methods: [POST]    
+# config/routes.yaml
 
- 
+send_email:
+    path: /send_email
+    controller: App\Controller\EventController::sendEmail
+    methods: ['POST']
+

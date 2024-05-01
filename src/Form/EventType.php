@@ -78,13 +78,14 @@ class EventType extends AbstractType
                 ],
             ])
             ->add('date', DateType::class, [
-                'html5' => false,
+                'html5' => true,
                 'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd', 
                 'constraints' => [
                     new NotBlank(['message' => 'Please select a date.']),
-                    new GreaterThan('today'), // Ensure the date is greater than today
+                    new GreaterThan('today'),
                 ],
-                'data' => new \DateTime(), // Set the default value to today's date
+                'data' => new \DateTime(),
             ]);
     }
 
