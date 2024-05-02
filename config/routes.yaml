@@ -2,5 +2,13 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 # config/routes.yaml
+createInscription:
+    path: /createInscription
+    controller: App\Controller\TestController::createInscription
+    methods: ['POST']
+search:
+    path: /search
+    controller: App\Controller\ClubController::search
+    methods: ['GET']
 
  

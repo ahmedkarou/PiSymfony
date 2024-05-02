@@ -1,51 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Club{% endblock %}
-
 {% block body %}
-    <h1>Club</h1>
+    <h1>Club Search Results</h1>
+
 
     <table class="table">
-        <tbody>
-        <tr>
-                <th>Image</th>
-                <td>
-                <img src="{{ asset('uploads/image/' ~ club.image) }}" alt="Livreur Image">
-                </td>
-            </tr>
-            
+        <thead>
             <tr>
                 <th>Name</th>
-                <td>{{ club.Name }}</td>
-            </tr>
-            <tr>
                 <th>Organizer</th>
-                <td>{{ club.organizer }}</td>
-            </tr>
-            <tr>
                 <th>Location</th>
-                <td>{{ club.location }}</td>
-            </tr>
-            <tr>
                 <th>Capacity</th>
-                <td>{{ club.capacity }}</td>
+                <th>Created At</th>
+                <th>Description</th>
+                <th>Image</th>
             </tr>
-            <tr>
-                <th>CreatedAt</th>
-                <td>{{ club.createdAt ? club.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Descripton</th>
-                <td>{{ club.descripton }}</td>
-            </tr>
-            
-
+        </thead>
+        <tbody>
+            {% for club in clubs %}
+                <tr>
+                    <td>{{ club.name }}</td>
+                    <td>{{ club.organizer }}</td>
+                    <td>{{ club.location }}</td>
+                    <td>{{ club.capacity }}</td>
+                    <td>{{ club.createdAt ? club.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ club.description }}</td>
+                    <td>
+                        <img src="{{ asset('uploads/image/' ~ club.image) }}" alt="Club Image">
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_club_index') }}">back to list</a>
-
-    <a href="{{ path('app_club_edit', {'id': club.id}) }}">edit</a>
-
-    {{ include('club/_delete_form.html.twig') }}
+    
 {% endblock %}

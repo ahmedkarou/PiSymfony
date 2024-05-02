@@ -45,4 +45,12 @@ class ClubRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findByKeyword(string $keyword): array
+{
+    return $this->createQueryBuilder('c')
+        ->andWhere('c.Name LIKE :keyword OR c.organizer LIKE :keyword')
+        ->setParameter('keyword', '%' . $keyword . '%')
+        ->getQuery()
+        ->getResult();
+}
 }

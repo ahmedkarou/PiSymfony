@@ -628,18 +628,20 @@
             </div>
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-              <!-- Search -->
-              <div class="navbar-nav align-items-center">
-                <div class="nav-item d-flex align-items-center">
-                  <i class="mdi mdi-magnify mdi-24px lh-0"></i>
-                  <input
-                    type="text"
-                    class="form-control border-0 shadow-none bg-body"
-                    placeholder="Search..."
-                    aria-label="Search..." />
-                </div>
-              </div>
-              <!-- /Search -->
+           <!-- Search -->
+<div class="navbar-nav align-items-center">
+    <div class="nav-item d-flex align-items-center">
+        <i class="mdi mdi-magnify mdi-24px lh-0"></i>
+        <input
+            type="text"
+            class="form-control border-0 shadow-none bg-body"
+            placeholder="Search..."
+            aria-label="Search..."
+            id="searchKeyword" 
+            onkeyup="searchClubs()" 
+        />
+    </div>
+</div>
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
@@ -1603,7 +1605,9 @@
                 <!--/ Data Tables -->
               </div>
             </div>
+            </div>
             <!-- / Content -->
+            {% endblock %}
 
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
@@ -1645,9 +1649,10 @@
 
             <div class="content-backdrop fade"></div>
           </div>
-          {% endblock %}
+          
           <!-- Content wrapper -->
         </div>
+       
         <!-- / Layout page -->
       </div>
 
@@ -1687,5 +1692,63 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js}}"></script>
+    <script>
+    // function searchClubs() {
+    //     var keyword = document.getElementById('searchKeyword').value;
+
+    //     fetch('/search?keyword=' + keyword)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             var clubsTable = document.getElementById('clubsTable');
+    //             clubsTable.innerHTML = ''; // Clear existing content
+
+    //             data.clubs.forEach(club => {
+    //                 var row = `
+    //                     <tr>
+    //                         <td>${club.name}</td>
+    //                         <td>${club.organizer}</td>
+    //                         <td>${club.location}</td>
+    //                         <td>${club.capacity}</td>
+    //                         <td>${club.createdAt}</td>
+    //                         <td>${club.description}</td>
+    //                         <td><img src="{{ asset('uploads/image/') }}${club.image}" alt="Club Image"></td>
+    //                     </tr>`;
+    //                 clubsTable.innerHTML += row;
+    //             });
+    //         })
+    //         .catch(error => {
+    //             console.error('Error searching clubs:', error);
+    //         });
+    // }
+     function searchClubs() {
+        var keyword = document.getElementById('searchKeyword').value;
+
+        fetch('/search?keyword=' + keyword)
+            .then(response => response.json())
+            .then(data => {
+                var tables = document.getElementsByClassName('clubsTable');
+                Array.from(tables).forEach(table => {
+                    table.innerHTML = ''; // Clear existing content
+
+                    data.clubs.forEach(club => {
+                        var row = `
+                            <tr>
+                                <td>${club.name}</td>
+                                <td>${club.organizer}</td>
+                                <td>${club.location}</td>
+                                <td>${club.capacity}</td>
+                                <td>${club.createdAt}</td>
+                                <td>${club.description}</td>
+                                <td><img src="{{ asset('uploads/image/') }}${club.image}" alt="Club Image"></td>
+                            </tr>`;
+                        table.innerHTML += row;
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('Error searching clubs:', error);
+            });
+    }
+</script>
   </body>
 </html>

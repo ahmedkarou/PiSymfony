@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClubRepository::class)]
 class Club
@@ -17,9 +18,23 @@ class Club
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 4,minMessage: "veuillez avoir au minimum 4 caractere" )]
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Your name cannot contain a number',)]
     private ?string $Name = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 4,minMessage: "veuillez avoir au minimum 4 caractere" )]
+
+
+    #[Assert\Regex(
+        pattern: '/\d/',
+        match: false,
+        message: 'Your prenom cannot contain a number',
+    )]
     private ?string $organizer = null;
 
     #[ORM\Column(length: 255)]
@@ -38,8 +53,11 @@ class Club
     #[ORM\Column(type: 'string')]
     private string $image;
 
-    #[ORM\OneToMany(targetEntity: Offre::class, mappedBy: 'club')]
+    #[ORM\OneToMany(targetEntity: Offre::class, mappedBy: 'club',cascade: ['persist','remove'])]
     private Collection $offer;
+
+    #[ORM\ManyToOne(inversedBy: 'club')]
+    private ?Inscription $inscription = null;
 
     public function __construct()
     {
@@ -166,6 +184,18 @@ public function getImage(): string
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getInscription(): ?Inscription
+    {
+        return $this->inscription;
+    }
+
+    public function setInscription(?Inscription $inscription): static
+    {
+        $this->inscription = $inscription;
 
         return $this;
     }

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Stat{% endblock %}
+
+{% block body %}
+
+    <h1>Statistics</h1>
+
+     <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Club Name');
+            data.addColumn('number', 'Inscription Count');
+            data.addRows([
+                {% for stat in stats %}
+                    ['{{ stat.clubName }}', {{ stat.inscriptionCount }}],
+                {% endfor %}
+            ]);
+
+            var options = {
+                title: 'Club Inscription Count',
+                hAxis: {title: 'Club Name',  titleTextStyle: {color: '#333'}},
+                vAxis: {minValue: 0}
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script> 
+    
+
+{% endblock %}
