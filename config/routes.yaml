@@ -1,19 +1,21 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
-# config/routes.yaml
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
 add_rating:
     path: /addRating
     controller: App\Controller\TestController::addRating
     methods: [POST]
+
 search_event:
     path: /search
     controller: App\Controller\EventController::search
-    methods: [POST]    
-# config/routes.yaml
+    methods: [POST]
 
-send_email:
-    path: /send_email
-    controller: App\Controller\EventController::sendEmail
-    methods: ['POST']
+generate_qr_code:
+    path: '/generate_qr_code/{id}/'
+    controller: 'App\Controller\QRCodeController::generateQRCode'
 
+app_qr_code:
+    path: '/qr-code/{id}'
+    controller: 'App\Controller\QrCodeGeneratorController::generateQrCode'

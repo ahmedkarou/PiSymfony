@@ -3,7 +3,7 @@
 {% block title %}Event index{% endblock %}
 
 {% block body %}
-<style>
+    <style>
         /* Style for the image */
         .club-image {
             max-width: 100px; /* Adjust the maximum width as needed */
@@ -11,26 +11,35 @@
             margin-right: 10px; /* Add some spacing between the image and the text */
             border-radius: 5px; /* Add a border radius for rounded corners */
         }
+        .qr-code-image {
+            max-width: 100px; /* Adjust the maximum width as needed */
+            height: auto;
+        }
     </style>
-    <h1>Event index</h1>
+  <h1>Event index</h1>
 
-    <table class="table">
-        <thead>
+<table class="table">
+    <!-- Table header -->
+    <thead>
+        <!-- Table column headers -->
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Capacite</th>
+            <th>Localisation</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Image</th>
+            <th>Date</th>
+            <th>Actions</th>
+            <th>QR Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in pagination %}
+            <!-- Table rows -->
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Capacite</th>
-                <th>Localization</th>
-                <th>Description</th>
-                <th>Type</th>
-                <th>Image</th>
-                <th>Date</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for event in events %}
-            <tr>
+                <!-- Display event details -->
                 <td>{{ event.id }}</td>
                 <td>{{ event.name }}</td>
                 <td>{{ event.capacite }}</td>
@@ -40,17 +49,30 @@
                 <td><img class="club-image" src="{{ asset('uploads/image/' ~ event.image) }}" alt="Event Image"></td>
                 <td>{{ event.date ? event.date|date('Y-m-d') : '' }}</td>
                 <td>
+                    <!-- Links to show and edit actions -->
                     <a href="{{ path('app_event_show', {'id': event.id}) }}">show</a>
                     <a href="{{ path('app_event_edit', {'id': event.id}) }}">edit</a>
                 </td>
+                <td>
+                    <!-- Link to generate QR Code -->
+                    <a href="{{ path('app_qr_code', {'id': event.id}) }}" >Générer Code Qr</a>
+                </td>
             </tr>
         {% else %}
+            <!-- Display message if no records found -->
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="10">No records found</td>
             </tr>
         {% endfor %}
-        </tbody>
-    </table>
+    </tbody>
+</table>
 
-    <a href="{{ path('app_event_new') }}">Create new</a>
+<!-- Pagination controls -->
+<div class="pagination">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+<!-- Link to create a new event -->
+<a href="{{ path('app_event_new') }}">Create new</a>
+
 {% endblock %}

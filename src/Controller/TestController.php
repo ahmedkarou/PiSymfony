@@ -26,14 +26,17 @@ use Doctrine\Persistence\ManagerRegistry;
 use Psr\Log\LoggerInterface;
 
 
+
 class TestController extends AbstractController
 {
     #[Route('/test', name: 'app_test')]
-    public function index(): Response
+    public function index(PaginatorInterface $paginator): Response
     {
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',
-        ]);
+           
+        ])
+        ;
     }
     #[Route('/front', name: 'app_show_front')]
     public function showClubFront(EntityManagerInterface $entityManager): Response

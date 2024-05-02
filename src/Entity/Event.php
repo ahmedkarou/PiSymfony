@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 
 class Event
@@ -53,6 +54,9 @@ class Event
     private ?string $image = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: "Veuillez sélectionner une date.")]
+    #[Assert\Type("\DateTimeInterface")]
+    #[Assert\GreaterThan("today", message: "La date de réservation doit être ultérieure à aujourd'hui.")]
     #[Groups(['search'])]
     private ?\DateTimeInterface $date = null;
 

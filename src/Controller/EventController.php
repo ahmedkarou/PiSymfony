@@ -17,17 +17,37 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\Writer\DataUriWriter;
+use App\Service\QrCodeGenerator; // Import the QrCodeGenerator service
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/event')]
 class EventController extends AbstractController
 {
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        // Retrieve all events from the repository
+        $query = $eventRepository->createQueryBuilder('e')
+            ->getQuery();
+
+        // Paginate the query
+        $pagination = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1), // Get the page number from the request, default to 1
+            5 // Number of items per page
+        );
+
+        // Render the template with paginated events
         return $this->render('event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
+            'pagination' => $pagination,
         ]);
     }
+
 
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager,SluggerInterface $slugger): Response
@@ -128,26 +148,16 @@ public function search(Request $request,  EntityManagerInterface $entityManager,
     
     return new Response(json_encode($jsonContent));
 }
-#[Route('/', name: 'send_email', methods: ['POST'])]
-public function sendEmail(Request $request, MailerInterface $mailer): Response
-{
-    // Récupérer l'adresse email saisie par l'utilisateur depuis la requête
-    $userEmail = json_decode($request->getContent(), true)['userEmail'];
 
-    // Construire et envoyer l'email
-    $email = (new Email())
-        ->from('motezhadjsalem4@gmail.com') // Remplacez avec votre adresse email
-        ->to($userEmail)
-        ->subject('Welcome to our newsletter!')
-        ->text('Thank you for subscribing to our newsletter.');
 
-    $mailer->send($email);
+        
+    }
 
-    // Répondre avec un message JSON pour confirmer que l'email a été envoyé avec succès
-    $successMessage = 'Email sent successfully!';
-    return new JsonResponse(['message' => $successMessage]);
-}
-}
+    
+
+  
+
+
 
 
    

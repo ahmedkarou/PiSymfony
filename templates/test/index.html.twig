@@ -7,7 +7,7 @@
     <meta name="keywords" content="Manup, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Manup | Template</title>
+    <title>SpotClub | Template</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500,600,700,800,900&display=swap"
@@ -1067,44 +1067,10 @@
                     <h3>Subscribe Newsletter</h3>
                     <p>Subscribe to our newsletter and don’t miss anything</p>
                 </div>
-           <form action="" method="post" class="ni-form" id="subscriptionForm">
-    <input type="email" name="userEmail" id="userEmail" placeholder="Your email" required>
-    <button type="submit">Subscribe</button>
-  </form>
-
-
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const subscriptionForm = document.getElementById('subscriptionForm');
-        const userEmailInput = document.getElementById('userEmail');
-        const subscriptionMessage = document.getElementById('subscriptionMessage');
-
-        subscriptionForm.addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
-
-            const userEmail = userEmailInput.value;
-
-            // Send AJAX request to send email
-            fetch('/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                },
-                body: JSON.stringify({
-                    userEmail: userEmail
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle response (e.g., show success message)
-                subscriptionMessage.textContent = data.message;
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    });
-</script>
+                <form action="#" class="ni-form">
+                    <input type="text" placeholder="Your email">
+                    <button type="submit">Subscribe</button>
+                </form>
             </div>
         </div>
     </section>
