@@ -629,19 +629,20 @@
             </div>
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-              <!-- Search -->
-            <div class="navbar-nav align-items-center">
-  <div class="nav-item d-flex align-items-center">
-    <i class="mdi mdi-magnify mdi-24px lh-0"></i>
-    <input
-      id="searchInput"
-      type="text"
-      class="form-control border-0 shadow-none bg-body"
-      placeholder="Search..."
-      aria-label="Search..." />
-  </div>
+           <!-- Search -->
+<div class="navbar-nav align-items-center">
+    <div class="nav-item d-flex align-items-center">
+        <i class="mdi mdi-magnify mdi-24px lh-0"></i>
+        <input
+            type="text"
+            class="form-control border-0 shadow-none bg-body"
+            placeholder="Search..."
+            aria-label="Search..."
+            id="searchKeyword" 
+            onkeyup="searchClubs()" 
+        />
+    </div>
 </div>
-              <!-- /Search -->
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
@@ -1605,7 +1606,9 @@
                 <!--/ Data Tables -->
               </div>
             </div>
+            </div>
             <!-- / Content -->
+            {% endblock %}
 
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
@@ -1647,9 +1650,10 @@
 
             <div class="content-backdrop fade"></div>
           </div>
-          {% endblock %}
+          
           <!-- Content wrapper -->
         </div>
+       
         <!-- / Layout page -->
       </div>
 
@@ -1719,83 +1723,63 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js}}"></script>
+    <script>
+    // function searchClubs() {
+    //     var keyword = document.getElementById('searchKeyword').value;
 
-  <script>
-document.addEventListener("DOMContentLoaded", function() {
-    // Add event listener to the search input
-    document.getElementById('searchInput').addEventListener('input', function() {
-        var searchTerm = this.value.trim();
+    //     fetch('/search?keyword=' + keyword)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             var clubsTable = document.getElementById('clubsTable');
+    //             clubsTable.innerHTML = ''; // Clear existing content
 
-        // Send AJAX request
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '{{ path('search_event') }}?searchTerm=' + searchTerm, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                console.log(response); // Log the response for inspection
+    //             data.clubs.forEach(club => {
+    //                 var row = `
+    //                     <tr>
+    //                         <td>${club.name}</td>
+    //                         <td>${club.organizer}</td>
+    //                         <td>${club.location}</td>
+    //                         <td>${club.capacity}</td>
+    //                         <td>${club.createdAt}</td>
+    //                         <td>${club.description}</td>
+    //                         <td><img src="{{ asset('uploads/image/') }}${club.image}" alt="Club Image"></td>
+    //                     </tr>`;
+    //                 clubsTable.innerHTML += row;
+    //             });
+    //         })
+    //         .catch(error => {
+    //             console.error('Error searching clubs:', error);
+    //         });
+    // }
+     function searchClubs() {
+        var keyword = document.getElementById('searchKeyword').value;
 
-                // Update event list
-                updateEventList(response);
-            } else {
-                console.error('Request failed with status:', xhr.status);
-            }
-        };
-        xhr.send();
-    });
-});
+        fetch('/search?keyword=' + keyword)
+            .then(response => response.json())
+            .then(data => {
+                var tables = document.getElementsByClassName('clubsTable');
+                Array.from(tables).forEach(table => {
+                    table.innerHTML = ''; // Clear existing content
 
-function updateEventList(events) {
-    // Find the eventList dynamically within the DOM
-    var eventList = document.getElementById('eventList');
-    if (!eventList) {
-        console.error('Error: Unable to find element with id "eventList"');
-        return;
+                    data.clubs.forEach(club => {
+                        var row = `
+                            <tr>
+                                <td>${club.name}</td>
+                                <td>${club.organizer}</td>
+                                <td>${club.location}</td>
+                                <td>${club.capacity}</td>
+                                <td>${club.createdAt}</td>
+                                <td>${club.description}</td>
+                                <td><img src="{{ asset('uploads/image/') }}${club.image}" alt="Club Image"></td>
+                            </tr>`;
+                        table.innerHTML += row;
+                    });
+                });
+            })
+            .catch(error => {
+                console.error('Error searching clubs:', error);
+            });
     }
-
-    // Clear previous content
-    eventList.innerHTML = '';
-
-    // Iterate through the events and create table rows
-    events.forEach(function(event) {
-        var row = document.createElement('tr');
-        
-        var nameCell = document.createElement('td');
-        nameCell.textContent = event.name;
-        row.appendChild(nameCell);
-
-        var capaciteCell = document.createElement('td');
-        capaciteCell.textContent = event.capacite;
-        row.appendChild(capaciteCell);
-
-        var localisationCell = document.createElement('td');
-        localisationCell.textContent = event.localization;
-        row.appendChild(localisationCell);
-
-        var descriptionCell = document.createElement('td');
-        descriptionCell.textContent = event.description;
-        row.appendChild(descriptionCell);
-        
-        var typeCell = document.createElement('td');
-        typeCell.textContent = event.type;
-        row.appendChild(typeCell);
-        
-        var imageCell = document.createElement('td');
-        var image = document.createElement('img');
-        image.src = '{{ asset('uploads/image/') }}' + event.image;
-        image.alt = 'Event Image';
-        imageCell.appendChild(image);
-        row.appendChild(imageCell);
-
-        var dateCell = document.createElement('td');
-        dateCell.textContent = event.date;
-        row.appendChild(dateCell);
-
-        // Append the row to the eventList table body
-        eventList.appendChild(row);
-    });
-}
 </script>
-
   </body>
 </html>

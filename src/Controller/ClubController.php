@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/club')]
 class ClubController extends AbstractController
@@ -104,6 +106,35 @@ class ClubController extends AbstractController
 
         return $this->redirectToRoute('app_club_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/search', name: 'club_search', methods: ['GET'])]
+public function search(Request $request, ClubRepository $clubRepository,LoggerInterface $logger): Response
+{
+    $logger->info('Received request: ' . $request);
+    $keyword = $request->query->get('keyword');
+
+    $clubs = $clubRepository->findByKeyword($keyword);
+
+    // Serialize clubs to array to be returned in JSON response
+    $clubsArray = [];
+    foreach ($clubs as $club) {
+        $createdAt = $club->getCreatedAt() ? $club->getCreatedAt()->format('Y-m-d H:i:s') : null;
+        $clubsArray[] = [
+            'id' => $club->getId(),
+            'name' => $club->getName(),
+            'organizer' => $club->getOrganizer(),
+            'location' => $club->getLocation(),
+            'capacity' => $club->getCapacity(),
+            'createdAt' => $createdAt,
+            'description' => $club->getDescripton(),
+            'image' => $club->getImage(),
+        ];
+    }
+
+    // return new JsonResponse(['clubs' => $clubsArray]);
+    return $this->render('club/show.html.twig', [
+        'clubs' => $clubs,
+    ]);
+}
 
     
 }

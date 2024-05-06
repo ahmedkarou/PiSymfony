@@ -45,4 +45,12 @@ class OffreRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function findByClubId(int $clubId): array
+{
+    return $this->createQueryBuilder('o')
+        ->andWhere('o.club = :clubId')
+        ->setParameter('clubId', $clubId)
+        ->getQuery()
+        ->getResult();
+}
 }
