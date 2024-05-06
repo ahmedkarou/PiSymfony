@@ -16,30 +16,31 @@ class Participatient
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Length(min: 4,minMessage: "veuillez avoir au minimum 4 caractere" )]
-
-
+    #[Assert\Length(min: 4, minMessage: "Veuillez avoir au minimum 4 caractères.")]
     #[Assert\Regex(
-        pattern: '/\d/',
-        match: false,
-        message: 'Your prenom cannot contain a number',
+        pattern: '/^\pL+$/u',
+        message: 'Votre nom ne peut contenir que des lettres.'
     )]
     private ?string $nom_par = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Length(min: 4,minMessage: "veuillez avoir au minimum 4 caractere" )]
-
-
+    #[Assert\Length(min: 4, minMessage: "Veuillez avoir au minimum 4 caractères.")]
     #[Assert\Regex(
-        pattern: '/\d/',
-        match: false,
-        message: 'Your prenom cannot contain a number',
+        pattern: '/^\pL+$/u',
+        message: 'Votre prénom ne peut contenir que des lettres.'
     )]
     private ?string $prenom_par = null;
 
     #[ORM\Column(length: 255)]
-
+    #[Assert\NotBlank]
+    #[Assert\Type("numeric", message: "L'âge doit être un nombre.")]
+    #[Assert\Range(
+        min: 5,
+        max: 16,
+        minMessage: "L'âge doit être supérieur ou égal à 5.",
+        maxMessage: "L'âge doit être inférieur ou égal à 16."
+    )]
     private ?string $age_par = null;
 
     #[ORM\ManyToOne(inversedBy: 'Participatient')]

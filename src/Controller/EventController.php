@@ -147,10 +147,7 @@ public function search(Request $request,  EntityManagerInterface $entityManager,
  
     
     return new Response(json_encode($jsonContent));
-}
-
-
-        
+} 
     }
 
     
