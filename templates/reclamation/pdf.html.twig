@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PDF Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #007bff;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        .logo {
+            width: 150px; /* Adjust width as needed */
+            height: auto;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {# <img src="{{ absolute_url(path('assets/images/logo.png')) }}" alt="Logo" class="logo"> <!-- Insert your logo here --> #}
+        <h1>List of Reclamations</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Message</th>
+                    <th>Type Reclamation</th>
+                    <th>Status</th>
+                    <th>Date Reclamation</th>
+             
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for reclamation in reclamations %}
+                    <tr>
+                        <td>{{ reclamation.message}}</td>
+                        <td>{{ reclamation.type}}</td>
+                        <td>{{ reclamation.statut}}</td>
+                        <td>{{ reclamation.dateRec ? reclamation.dateRec|date('d-m-Y') : '' }}</td>
+                    
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No records found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

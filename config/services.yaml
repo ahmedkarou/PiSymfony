@@ -5,8 +5,19 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     brochures_directory: '%kernel.project_dir%/public/uploads/image'
+    twilio_account_sid: 'ACe2f77574d3c8a7d1e6fdf5bd92a7c4b6'
+    twilio_auth_token: '0e46587716951a6c42743a615b093000'
+    twilio_phone_number: '+18489993150'
+
 
 services:
+    App\Service\SmsService:
+        arguments:
+            $twilioAccountSid: '%twilio_account_sid%'
+            $twilioAuthToken: '%twilio_auth_token%'
+            $twilioPhoneNumber: '%twilio_phone_number%'
+        autowire: true
+        autoconfigure: true
     App\Controller\QrCodeGeneratorController:
         autowire: true
         autoconfigure: true
@@ -18,13 +29,7 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
     # Alias ChartOutputInterface to ChartOutput
-    CMEN\GoogleChartsBundle\Output\ChartOutputInterface: '@CMEN\GoogleChartsBundle\Output\Javascript\ChartOutput'
-
-    # Register GoogleChartsExtension as a Twig extension
-    CMEN\GoogleChartsBundle\Twig\GoogleChartsExtension:
-        arguments:
-            $chartOutput: '@CMEN\GoogleChartsBundle\Output\ChartOutputInterface'
-        tags: ['twig.extension']    
+   
        
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    
+    <style>
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            display: inline-block;
+            padding: 5px 10px;
+            margin-right: 5px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 3px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .no-records {
+            font-style: italic;
+            color: #999;
+        }
+
+        .create-new {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .create-new:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Reclamations </h1>
+       <a href="{{path('app_generate_pdf')}}" class="btn btn-primary">Download PDF</a> 
+       <input id="search-input" type="form-control" placeholder="Search...">
+<title>AJAX Search Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdReclamation</th>
+                <th>Message</th>
+                <th>Type</th>
+                <th>Statut</th>
+                <th>DateRec</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reclamation in reclamations %}
+            <tr>
+                <td>{{ reclamation.id }}</td>
+                <td>{{ reclamation.message }}</td>
+                <td>{{ reclamation.type }}</td>
+                <td>{{ reclamation.statut }}</td>
+<td>{{ reclamation.dateRec|date('Y-m-d H:i:s') }}</td>
+                <td>
+                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}" class="btn btn-primary">show</a>
+                            {{ include('reclamation/_delete_form.html.twig') }}
+
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reclamation_new') }}" class="btn btn-success">Create new</a>
+{% endblock %}

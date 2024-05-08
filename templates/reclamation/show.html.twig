@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    
+    <style>
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        a {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-right: 10px;
+            text-decoration: none;
+            color: #007bff;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        a:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .delete-form {
+            display: inline-block;
+        }
+
+        .delete-button {
+            padding: 8px 16px;
+            background-color: #dc3545;
+            color: #fff;
+            border: 1px solid #dc3545;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+            color: #fff;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Reclamation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdReclamation</th>
+                <td>{{ reclamation.id }}</td>
+            </tr>
+            <tr>
+                <th>Message</th>
+                <td>{{ reclamation.message }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ reclamation.type }}</td>
+            </tr>
+            <tr>
+                <th>Statut</th>
+                <td>{{ reclamation.statut }}</td>
+            </tr>
+            <tr>
+                <th>DateRec</th>
+                <td>{{ reclamation.dateRec|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+      {% if reclamation.statut != 'traite' %}
+    <form method="post" action="{{ path('reclamation_traite', {'id': reclamation.id}) }}">
+        <input type="hidden" name="_token" value="{{ csrf_token('traite' ~ reclamation.id) }}">
+        <button type="submit">Mark as Traite</button>
+    </form>
+{% endif %}
+
+      
+    <a href="{{ path('app_reclamation_index_back') }}" class="btn btn-info">back to list</a>
+    <a href="{{ path('app_reponse_new') }}" class="btn btn-outline-info">Repondre</a>
+        {{ include('reclamation/_delete_form.html.twig') }}
+
+
+
+{% endblock %}

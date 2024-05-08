@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <div class="">
+        <h1>Add New Response</h1>
+        {{ form_start(form, {'attr': {'class': 'my-4', 'novalidate': 'novalidate'}}) }}
+        
+        <div class="form-group" style="margin:50px">
+            {{ form_label(form.messageRep, 'Message', {'label_attr': {'class': 'form-label'}}) }}
+{{ form_widget(form.messageRep, {'attr': {'class': 'form-control form-control-gey', 'placeholder': 'Enter your message', 'style': 'background-color: rgba(128, 128, 128, 0.5)'}}) }}
+            {{ form_errors(form.messageRep) }}
+        </div>
+      
+        <button type="submit" class="btn btn-success">{{ button_label|default('Send') }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

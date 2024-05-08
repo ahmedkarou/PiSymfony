@@ -56,8 +56,8 @@
             <div class="nav-menu">
                 <nav class="mainmenu mobile-menu">
                     <ul>
-                        <li class="active"><a href="/frontevent">Home</a></li>
-                        <li><a href="/front">Club</a></li>
+                        <li class="active"><a href="./index.html">Home</a></li>
+                        <li><a href="./about-us.html">About</a></li>
                         <li><a href="./speaker.html">Speakers</a>
                             <ul class="dropdown">
                                 <li><a href="#">Jayden</a></li>
@@ -68,7 +68,7 @@
                         </li>
                         <li><a href="./schedule.html">Schedule</a></li>
                         <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Reclamation</a></li>
+                        <li><a href="./contact.html">Contacts</a></li>
                     </ul>
                 </nav>
                 <a href="#" class="primary-btn top-btn"><i class="fa fa-ticket"></i> Ticket</a>
@@ -320,7 +320,86 @@
     {% endblock %}
     <!-- Newslatter Section End -->
 
-    <!-- Contact Section Begin -->
+    
+{% block stylesheets %}
+    
+    <style>
+        .reclamations-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .reclamation-card {
+            flex: 1 1 300px;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #f2f2f2; /* Changed background color to grey */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+            border: 1px solid #dddddd;
+        }
+
+        .reclamation-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .reclamation-card h2 {
+            margin-bottom: 10px;
+            color: #333333;
+        }
+
+        .reclamation-card p {
+            margin-bottom: 8px;
+            color: #666666;
+        }
+
+        .reclamation-card .actions {
+            margin-top: 15px;
+        }
+
+        .reclamation-card .edit-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .reclamation-card .edit-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>My Reclamations</h1>
+
+    <div class="reclamations-container" style="margin-left: 350px;">
+        {% if reclamations is empty %}
+            <p class="no-records">No records found</p>
+        {% else %}
+            {% for reclamation in reclamations %}
+<div class="reclamation-card" style="margin-bottom: 100px; margin-top: 50px; border: 2px solid #ddd; border-radius: 10px; background-color: #f0f0f0;padding:20px;  width: 400px;">
+                    <h2>Reclamation #{{ reclamation.id }}</h2>
+                    <p><strong>Message:</strong> {{ reclamation.message }}</p>
+                    <p><strong>Type:</strong> {{ reclamation.type }}</p>
+                    <p><strong>Status:</strong> {{ reclamation.statut }}</p>
+                    <p><strong>Date:</strong> {{ reclamation.dateRec|date('Y-m-d H:i:s') }}
+</p>
+                    <div class="actions">
+                        <a class="btn btn-warning" href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" style="margin-top: 30px;">Edit</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <a href="{{ path('app_reclamation_new') }}" class="btn btn-primary" style="margin-left: 750px;">Add new Reclamation !</a>
+{% endblock %}
+<!-- Contact Section Begin -->
     <section class="contact-section spad">
         <div class="container">
             <div class="row">

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>Reponse </h1>
+<input id="search-input" type="form-control" placeholder="Search...">
+<title>AJAX Search Example</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#search-input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdReponse</th>
+                <th>MessageRep</th>
+                <th>DateRep</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reponse in reponses %}
+            <tr>
+                <td>{{ reponse.id }}</td>
+                <td>{{ reponse.messageRep }}</td>
+                <td>{{ reponse.dateRep |date('Y-m-d H:i:s') }}</td>
+                <td>
+                    <a href="{{ path('app_reponse_show', {'id': reponse.id}) }}" class="btn btn-primary">show</a>
+                    <a href="{{ path('app_reponse_edit', {'id': reponse.id}) }}" class="btn btn-outline-secondary">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reponse_new') }}" class="btn btn-success">Create new</a>
+{% endblock %}

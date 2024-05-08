@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Manup Template">
+    <meta name="keywords" content="Manup, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Manup | Template</title>
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,500,600,700,800,900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap" rel="stylesheet">
+
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/elegant-icons.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/owl.carousel.min.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/magnific-popup.css')}}" type="text/css">
+    <link rel="stylesheet" href="{{ asset('css/slicknav.min.css')}}" type="text/css')}}">
+    <link rel="stylesheet" href="{{ asset('css/style.css')}}" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+      {% for message in app.session.flashBag.get('info') %}
+
+                                                <div class="alert alert-info">{{ message }}</div>
+                                            {% endfor %}
+                                            {% for message in app.session.flashBag.get('success') %}
+
+                                                <div class="alert alert-success">{{ message }}</div>
+                                            {% endfor %}
+
+                                            {% for message in app.session.flashBag.get('error') %}
+
+                                                <div class="alert alert-danger">{{ message }}</div>
+                                            {% endfor %}
+
+    <!-- Header Section Begin -->
+    <header class="header-section">
+        <div class="container">
+            <div class="logo">
+                <a href="./index.html">
+                    <img src="img/logo2.png" alt="">
+                </a>
+            </div>
+            <div class="nav-menu">
+                <nav class="mainmenu mobile-menu">
+                    <ul>
+                        <li class="active"><a href="./index.html">Home</a></li>
+                        <li><a href="./about-us.html">About</a></li>
+                        <li><a href="./speaker.html">Speakers</a>
+                            <ul class="dropdown">
+                                <li><a href="#">Jayden</a></li>
+                                <li><a href="#">Sara</a></li>
+                                <li><a href="#">Emma</a></li>
+                                <li><a href="#">Harriet</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="./schedule.html">Schedule</a></li>
+                        <li><a href="./blog.html">Blog</a></li>
+                        <li><a href="./contact.html">Contacts</a></li>
+                    </ul>
+                </nav>
+                <a href="#" class="primary-btn top-btn"><i class="fa fa-ticket"></i> Ticket</a>
+            </div>
+            <div id="mobile-menu-wrap"></div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <!-- Hero Section Begin -->
+    <section class="hero-section set-bg" data-setbg="img/run2.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="hero-text">
+                        <span>5 to 9 may 2019, Palace hotel, Tunis</span>
+                        <h2>Change Your lifestyle<br /> To Become Sportif</h2>
+        
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <img src="img/hero-right.png" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+   
+   
+
+
+{% block body %}
+    <div class="container">
+       
+        {{ form_start(form, {'attr': {'class': 'my-4', 'novalidate': 'novalidate'}}) }}
+        <div class="form-group">
+            {{ form_label(form.message, 'Message', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.message, {'attr': {'class': 'form-control', 'placeholder': 'Enter your message'}}) }}
+            {{ form_errors(form.message) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.type, 'Type', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.type, {'attr': {'class': 'form-control', 'placeholder': 'Enter the type'}}) }}
+             {{ form_errors(form.type) }}
+        </div>
+      
+        {# <div class="form-group">
+            {{ form_label(form.dateRec, 'Date', {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(form.dateRec, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.dateRec) }}
+        </div> #}
+       
+      
+        <button type="submit" class="btn btn-outline-primary">{{ button_label|default('Send') }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="partner-logo owl-carousel">
+                <a href="#" class="pl-table">
+                    <div class="pl-tablecell">
+                        <img src="{{ asset('img/partner-logo/logo-1.png')}}" alt="">
+                    </div>
+                </a>
+                <a href="#" class="pl-table">
+                    <div class="pl-tablecell">
+                        <img src="{{ asset('img/partner-logo/logo-2.png')}}" alt="">
+                    </div>
+                </a>
+                <a href="#" class="pl-table">
+                    <div class="pl-tablecell">
+                        <img src="{{ asset('img/partner-logo/logo-3.png')}}" alt="">
+                    </div>
+                </a>
+                <a href="#" class="pl-table">
+                    <div class="pl-tablecell">
+                        <img src="{{ asset('img/partner-logo/logo-4.png')}}" alt="">
+                    </div>
+                </a>
+                <a href="#" class="pl-table">
+                    <div class="pl-tablecell">
+                        <img src="{{ asset('img/partner-logo/logo-5.png')}}" alt="">
+                    </div>
+                </a>
+                <a href="#" class="pl-table">
+                    <div class="pl-tablecell">
+                        <img src="{{ asset('img/partner-logo/logo-6.png')}}" alt="">
+                    </div>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer-text">
+                        <div class="ft-logo">
+                            <a href="#" class="footer-logo"><img src="{{ asset('img/logo2.png')}}" alt=""></a>
+                        </div>
+                        <ul>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Speakers</a></li>
+                            <li><a href="#">Schedule</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                        <div class="copyright-text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+                        <div class="ft-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-youtube-play"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{ asset('js/jquery.countdown.min.js')}}"></script>
+    <script src="{{ asset('js/jquery.slicknav.js')}}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js')}}"></script>
+    <script src="{{ asset('js/main.js')}}"></script>
+</body>
+
+</html>

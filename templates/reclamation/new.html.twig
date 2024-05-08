@@ -56,8 +56,8 @@
             <div class="nav-menu">
                 <nav class="mainmenu mobile-menu">
                     <ul>
-                        <li class="active"><a href="/frontevent">Home</a></li>
-                        <li><a href="/front">Club</a></li>
+                        <li class="active"><a href="./index.html">Home</a></li>
+                        <li><a href="./about-us.html">About</a></li>
                         <li><a href="./speaker.html">Speakers</a>
                             <ul class="dropdown">
                                 <li><a href="#">Jayden</a></li>
@@ -68,7 +68,7 @@
                         </li>
                         <li><a href="./schedule.html">Schedule</a></li>
                         <li><a href="./blog.html">Blog</a></li>
-                        <li><a href="./contact.html">Reclamation</a></li>
+                        <li><a href="./contact.html">Contacts</a></li>
                     </ul>
                 </nav>
                 <a href="#" class="primary-btn top-btn"><i class="fa fa-ticket"></i> Ticket</a>
@@ -319,116 +319,12 @@
     </section>
     {% endblock %}
     <!-- Newslatter Section End -->
+{% block title %}New Reclamation{% endblock %}
 
-    <!-- Contact Section Begin -->
-    <section class="contact-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="section-title">
-                        <h2>Location</h2>
-                        <p>Get directions to our event center</p>
-                    </div>
-                    <div class="cs-text">
-                        <div class="ct-address">
-                            <span>Address:</span>
-                            <p>ariana soghra , ariana  <br />Tunisie</p>
-                        </div>
-                        <ul>
-                            <li>
-                                <span>Phone:</span>
-                                (+216)72-671-891
-                            </li>
-                            <li>
-                                <span>Email:</span>
-                                club.spotlib@gmail.com
-                            </li>
-                        </ul>
-                        <div class="ct-links">
-                            <span>Website:</span>
-                            <p>clubspot.com</p>
-                        </div>
-                    </div>
-                </div>
-              
-            </div>
-        </div>
-    </section>
-    <!-- Contact Section End -->
+{% block body %}
+    <h1>Create new Reclamation</h1>
 
-    <!-- Footer Section Begin -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="partner-logo owl-carousel">
-                <a href="#" class="pl-table">
-                    <div class="pl-tablecell">
-                        <img src="{{ asset('img/partner-logo/logo-1.png')}}" alt="">
-                    </div>
-                </a>
-                <a href="#" class="pl-table">
-                    <div class="pl-tablecell">
-                        <img src="{{ asset('img/partner-logo/logo-2.png')}}" alt="">
-                    </div>
-                </a>
-                <a href="#" class="pl-table">
-                    <div class="pl-tablecell">
-                        <img src="{{ asset('img/partner-logo/logo-3.png')}}" alt="">
-                    </div>
-                </a>
-                <a href="#" class="pl-table">
-                    <div class="pl-tablecell">
-                        <img src="{{ asset('img/partner-logo/logo-4.png')}}" alt="">
-                    </div>
-                </a>
-                <a href="#" class="pl-table">
-                    <div class="pl-tablecell">
-                        <img src="{{ asset('img/partner-logo/logo-5.png')}}" alt="">
-                    </div>
-                </a>
-                <a href="#" class="pl-table">
-                    <div class="pl-tablecell">
-                        <img src="{{ asset('img/partner-logo/logo-6.png')}}" alt="">
-                    </div>
-                </a>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer-text">
-                        <div class="ft-logo">
-                            <a href="#" class="footer-logo"><img src="{{ asset('img/logo2.png')}}" alt=""></a>
-                        </div>
-                        <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Speakers</a></li>
-                            <li><a href="#">Schedule</a></li>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                        <div class="copyright-text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="ft-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-youtube-play"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
+    {{ include('reclamation/_form.html.twig') }}
 
-    <!-- Js Plugins -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ asset('js/bootstrap.min.js')}}"></script>
-    <script src="{{ asset('js/jquery.magnific-popup.min.js')}}"></script>
-    <script src="{{ asset('js/jquery.countdown.min.js')}}"></script>
-    <script src="{{ asset('js/jquery.slicknav.js')}}"></script>
-    <script src="{{ asset('js/owl.carousel.min.js')}}"></script>
-    <script src="{{ asset('js/main.js')}}"></script>
-</body>
-
-</html>
+    <a href="{{ path('app_reclamation_index') }}">back to list</a>
+{% endblock %}
